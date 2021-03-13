@@ -20,6 +20,8 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "OCV4.h"
+
 #include "MapPoint.h"
 #include "KeyFrame.h"
 
