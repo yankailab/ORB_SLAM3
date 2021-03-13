@@ -175,7 +175,7 @@ void LocalMapping::Run()
 
                 if ((mTinit<100.0f) && mbInertial)
                 {
-                    if(mpCurrentKeyFrame->GetMap()->isImuInitialized() && mpTracker->mState==Tracking::OK) // Enter here everytime local-mapping is called
+                    if(mpCurrentKeyFrame->GetMap()->isImuInitialized() && mpTracker->mState==Tracking::TRACK_OK) // Enter here everytime local-mapping is called
                     {
                         if(!mpCurrentKeyFrame->GetMap()->GetIniertialBA1()){
                             if (mTinit>5.0f)
@@ -1376,7 +1376,7 @@ void LocalMapping::InitializeIMU(float priorG, float priorA, bool bFIBA)
     }
     mlNewKeyFrames.clear();
 
-    mpTracker->mState=Tracking::OK;
+    mpTracker->mState=Tracking::TRACK_OK;
     bInitializing = false;
 
 

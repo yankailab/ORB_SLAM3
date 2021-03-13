@@ -71,7 +71,7 @@ cv::Mat FrameDrawer::DrawFrame(bool bOldFeatures)
             vMatches = mvIniMatches;
             vTracks = mvTracks;
         }
-        else if(mState==Tracking::OK /*&& bOldFeatures*/)
+        else if(mState==Tracking::TRACK_OK /*&& bOldFeatures*/)
         {
             vCurrentKeys = mvCurrentKeys;
             vbVO = mvbVO;
@@ -111,7 +111,7 @@ cv::Mat FrameDrawer::DrawFrame(bool bOldFeatures)
             cv::line(im,(*it).first,(*it).second, cv::Scalar(0,255,0),5);
 
     }
-    else if(state==Tracking::OK && bOldFeatures) //TRACKING
+    else if(state==Tracking::TRACK_OK && bOldFeatures) //TRACKING
     {
         mnTracked=0;
         mnTrackedVO=0;
@@ -148,7 +148,7 @@ cv::Mat FrameDrawer::DrawFrame(bool bOldFeatures)
         }
         // std::cout << "2.3" << std::endl;
     }
-    else if(state==Tracking::OK && !bOldFeatures)
+    else if(state==Tracking::TRACK_OK && !bOldFeatures)
     {
         mnTracked=0;
         int nTracked2 = 0;
@@ -292,7 +292,7 @@ cv::Mat FrameDrawer::DrawRightFrame()
             vIniKeys = mvIniKeys;
             vMatches = mvIniMatches;
         }
-        else if(mState==Tracking::OK)
+        else if(mState==Tracking::TRACK_OK)
         {
             vCurrentKeys = mvCurrentKeysRight;
             vbVO = mvbVO;
@@ -319,7 +319,7 @@ cv::Mat FrameDrawer::DrawRightFrame()
             }
         }
     }
-    else if(state==Tracking::OK) //TRACKING
+    else if(state==Tracking::TRACK_OK) //TRACKING
     {
         mnTracked=0;
         mnTrackedVO=0;
@@ -369,7 +369,7 @@ void FrameDrawer::DrawTextInfo(cv::Mat &im, int nState, cv::Mat &imText)
         s << " WAITING FOR IMAGES";
     else if(nState==Tracking::NOT_INITIALIZED)
         s << " TRYING TO INITIALIZE ";
-    else if(nState==Tracking::OK)
+    else if(nState==Tracking::TRACK_OK)
     {
         if(!mbOnlyTracking)
             s << "SLAM MODE |  ";
@@ -445,7 +445,7 @@ void FrameDrawer::Update(Tracking *pTracker)
         mvIniKeys=pTracker->mInitialFrame.mvKeys;
         mvIniMatches=pTracker->mvIniMatches;
     }
-    else if(pTracker->mLastProcessedState==Tracking::OK)
+    else if(pTracker->mLastProcessedState==Tracking::TRACK_OK)
     {
         for(int i=0;i<N;i++)
         {

@@ -1501,7 +1501,7 @@ void Tracking::Track()
 
         mpFrameDrawer->Update(this);
 
-        if(mState!=OK) // If rightly initialized, mState=OK
+        if(mState!=TRACK_OK) // If rightly initialized, mState=TRACK_OK
         {
             mLastFrame = Frame(mCurrentFrame);
             return;
@@ -1527,7 +1527,7 @@ void Tracking::Track()
             // State OK
             // Local Mapping is activated. This is the normal behaviour, unless
             // you explicitly activate the "only tracking" mode.
-            if(mState==OK)
+            if(mState==TRACK_OK)
             {
 
                 // Local Mapping might have changed some MapPoints tracked in last frame
@@ -1735,8 +1735,8 @@ void Tracking::Track()
         }
 
         if(bOK)
-            mState = OK;
-        else if (mState == OK)
+            mState = TRACK_OK;
+        else if (mState == TRACK_OK)
         {
             if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO)
             {
@@ -1880,7 +1880,7 @@ void Tracking::Track()
 
 
 
-    if(mState==OK || mState==RECENTLY_LOST)
+    if(mState==TRACK_OK || mState==RECENTLY_LOST)
     {
         // Store frame pose information to retrieve the complete camera trajectory afterwards.
         if(!mCurrentFrame.mTcw.empty())
@@ -2007,7 +2007,7 @@ void Tracking::StereoInitialization()
 
         mpMapDrawer->SetCurrentCameraPose(mCurrentFrame.mTcw);
 
-        mState=OK;
+        mState=TRACK_OK;
     }
 }
 
@@ -2235,7 +2235,7 @@ void Tracking::CreateInitialMapMonocular()
 
     mpAtlas->GetCurrentMap()->mvpKeyFrameOrigins.push_back(pKFini);
 
-    mState=OK;
+    mState=TRACK_OK;
 
     initID = pKFcur->mnId;
 }
@@ -2558,7 +2558,7 @@ bool Tracking::TrackLocalMap()
         }
         else
         {
-            // if(!mbMapUpdated && mState == OK) //  && (mnMatchesInliers>30))
+            // if(!mbMapUpdated && mState == TRACK_OK) //  && (mnMatchesInliers>30))
             if(!mbMapUpdated) //  && (mnMatchesInliers>30))
             {
                 Verbose::PrintMess("TLM: PoseInertialOptimizationLastFrame ", Verbose::VERBOSITY_DEBUG);
